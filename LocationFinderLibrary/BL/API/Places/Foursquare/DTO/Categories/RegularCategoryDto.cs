@@ -1,8 +1,8 @@
-﻿using LocationFinderLibrary.BL.API.Places.FoursquarePlaces.DTO.Common;
+﻿using LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Common;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace LocationFinderLibrary.BL.API.Places.FoursquarePlaces.DTO.Categories
+namespace LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Categories
 {
     public class RegularCategoryDto : BaseCategoryDto
     {

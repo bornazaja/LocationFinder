@@ -1,6 +1,6 @@
 ﻿using LocationFinderLibrary.BL.API.Places.Common.DTO;
-using LocationFinderLibrary.BL.API.Places.FoursquarePlaces.DTO.Categories;
-using LocationFinderLibrary.BL.API.Places.FoursquarePlaces.DTO.Venues;
+using LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Categories;
+using LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Venues;
 using LocationFinderLibrary.BL.Extensions;
 using Newtonsoft.Json;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace LocationFinderLibrary.BL.API.Places.FoursquarePlaces
+namespace LocationFinderLibrary.BL.API.Places.Foursquare
 {
     public class FoursquarePlacesApi : IPlacesApi
     {

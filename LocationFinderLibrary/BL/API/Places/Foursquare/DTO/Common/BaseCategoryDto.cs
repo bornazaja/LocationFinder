@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace LocationFinderLibrary.BL.API.Places.FoursquarePlaces.DTO.Common
+namespace LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Common
 {
     public abstract class BaseCategoryDto
     {

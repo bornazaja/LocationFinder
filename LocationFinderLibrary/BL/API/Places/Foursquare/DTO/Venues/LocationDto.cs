@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace LocationFinderLibrary.BL.API.Places.FoursquarePlaces.DTO.Venues
+namespace LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Venues
 {
     public class LocationDto
     {

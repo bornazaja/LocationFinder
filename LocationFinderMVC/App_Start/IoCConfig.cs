@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using LocationFinderLibrary.BL.API.Places;
-using LocationFinderLibrary.BL.API.Places.FoursquarePlaces;
+using LocationFinderLibrary.BL.API.Places.Foursquare;
 using System.Reflection;
 using System.Web.Mvc;
 

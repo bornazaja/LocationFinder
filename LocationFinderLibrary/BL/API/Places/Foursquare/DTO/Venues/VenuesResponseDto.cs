@@ -1,9 +1,9 @@
-﻿using LocationFinderLibrary.BL.API.Places.FoursquarePlaces.DTO.Common;
+﻿using LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Common;
 using Newtonsoft.Json;
 
-namespace LocationFinderLibrary.BL.API.Places.FoursquarePlaces.DTO.Categories
+namespace LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Venues
 {
-    public class CategoriesResponseDto
+    public class VenuesResponseDto
     {
         [JsonProperty("meta")]
         public MetaDto Meta { get; set; }
