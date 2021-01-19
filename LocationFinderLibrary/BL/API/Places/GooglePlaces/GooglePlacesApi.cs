@@ -131,7 +131,7 @@ namespace LocationFinderLibrary.BL.API.Places.GooglePlaces
                 {
                     Address = x.Vicinity,
                     Place = x.Name,
-                    Category = x.Types.FirstOrDefault()
+                    Category = x.Types.Count == 0 ? string.Empty : x.Types.First()
                 });
             }
         }

@@ -14,7 +14,7 @@ namespace LocationFinderLibrary.BL.API.Places.Foursquare
     public class FoursquarePlacesApi : IPlacesApi
     {
         private const string ClientId = "CLIENT_ID";
-        private const string ClientSecret = "CLIENT_SECRET";
+        private const string ClientSecret = "SECRET_CLIENT";
         private const string DateFormat = "yyyyMMdd";
 
         public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
@@ -52,9 +52,9 @@ namespace LocationFinderLibrary.BL.API.Places.Foursquare
 
                 return venuesResponse.Response.Venues.Select(x => new NearbyPlaceDto
                 {
-                    Address = x.Location.Address,
+                    Address = x.Location.FormattedAddress.Count == 0 ? string.Empty : string.Join(", ", x.Location.FormattedAddress),
                     Place = x.Name,
-                    Category = x.Categories.Where(c => c.Primary).FirstOrDefault().Name
+                    Category = x.Categories.Count == 0 ? string.Empty : x.Categories.Where(c => c.Primary).FirstOrDefault().Name
                 });
             }
         }

@@ -38,7 +38,7 @@ namespace LocationFinderLibrary.BL.API.Places.Foursquare.DTO.Venues
         [JsonProperty("country")]
         public string Country { get; set; }
 
-        [JsonProperty("formatedAddress")]
-        public List<string> FormatedAdress { get; set; }
+        [JsonProperty("formattedAddress")]
+        public List<string> FormattedAddress { get; set; }
     }
 }

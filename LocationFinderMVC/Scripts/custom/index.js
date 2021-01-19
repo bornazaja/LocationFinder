@@ -1,5 +1,5 @@
 ﻿$(window).on('load', function () {
-    app.dialogHelper.loading([fetchCategories(), fetchRadiuses(), findCurrentLocation()]);
+    app.dialogHelper.loading([fetchCategories()]);
 });
 
 $('#btnApply').click(function () {
@@ -10,12 +10,14 @@ $('#btnApply').click(function () {
 function fetchCategories() {
     app.getJson('/Home/GetCategoriesAsync', (data) => {
         app.bindSelect2('#ddlCategories', data);
+        fetchRadiuses();
     }, 'Error occur while retriving categories.');
 }
 
 function fetchRadiuses() {
     app.getJson('/Home/GetRadiuses', (data) => {
         app.bindSelect2('#ddlRadiuses', data);
+        findCurrentLocation();
     }, 'Error occur while retriving radiuses.');
 }
 

@@ -6,7 +6,7 @@ namespace LocationFinderLibrary.BL.API.Places
 {
     public interface IPlacesApi
     {
-        Task<IEnumerable<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto);
         Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
+        Task<IEnumerable<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto);
     }
 }

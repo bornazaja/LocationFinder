@@ -57,7 +57,7 @@
                 closeButton: false
             });
 
-            Promise.all(promises).then(() => setTimeout(() => dialog.modal('hide'), 1000));
+            Promise.all(promises).then(() => setTimeout(() => dialog.modal('hide'), 700));
         }
     };
 
