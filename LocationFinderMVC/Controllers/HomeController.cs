@@ -1,6 +1,6 @@
-﻿using LocationFinderLibrary.BL.API.Places;
-using LocationFinderLibrary.BL.API.Places.Common.DTO;
-using LocationFinderLibrary.BL.API.Places.Helpers;
+﻿using LocationFinderLibrary.BLL.API.Places;
+using LocationFinderLibrary.BLL.API.Places.Common.DTO;
+using LocationFinderLibrary.BLL.API.Places.Helpers;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;

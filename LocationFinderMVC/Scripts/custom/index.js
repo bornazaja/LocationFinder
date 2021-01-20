@@ -3,8 +3,8 @@
 });
 
 $('#btnApply').click(function () {
-    app.dialogHelper.loading([findCurrentLocation()]);
     $('#filterModal').modal('hide');
+    app.dialogHelper.loading([findCurrentLocation()]);
 });
 
 function fetchCategories() {
