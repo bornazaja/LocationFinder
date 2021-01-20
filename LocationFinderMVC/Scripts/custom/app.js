@@ -2,9 +2,9 @@
 
     function getJson(url, objectParameter = null, callback, errorMessage) {
         if (objectParameter != null) {
-            $.getJSON(url, objectParameter, data => callback(data)).fail(() => app.dialogHelper.alert(errorMessage));
+            $.getJSON(url, objectParameter, data => callback(data)).fail(() => app.dialog.alert(errorMessage));
         } else {
-            $.getJSON(url).done(data => callback(data)).fail(() => app.dialogHelper.alert(errorMessage));
+            $.getJSON(url).done(data => callback(data)).fail(() => app.dialog.alert(errorMessage));
         }
     }
 
@@ -18,7 +18,9 @@
             'aoColumns': tableColumns,
             'sScrollX': '100%',
             'sScrollXInner': '100%',
-            destroy: true
+            'bInfo': false,
+            destroy: true,
+            paging: false
         });
     }
 
@@ -34,7 +36,7 @@
         $(ddlId).val($(ddlId + ' option:eq(0)').val()).trigger('change');
     }
 
-    var dialogHelper = {
+    var dialog = {
         alert: function (message, callback = null) {
             bootbox.alert({
                 message: message,
@@ -61,10 +63,29 @@
         }
     };
 
+    var twbsPagination = {
+        setup: function (paginationId, totalPages, pageIndex, callback) {
+            $(paginationId).html('');
+            $(paginationId).html('<ul id="pagination" class="pagination">');
+            $(paginationId + ' > #pagination').twbsPagination({
+                initiateStartPageClick: false,
+                totalPages: totalPages,
+                startPage: pageIndex + 1,
+                onPageClick: function (event, page) {
+                    callback(paginationId, page - 1);
+                }
+            });
+        },
+        refresh: function (paginationId, totalPages) {
+            $(paginationId + '> #pagination').twbsPagination({ totalPages: totalPages });
+        }
+    };
+    
     return {
         getJson: getJson,
         bindDataTable: bindDataTable,
         bindSelect2: bindSelect2,
-        dialogHelper: dialogHelper
+        dialog: dialog,
+        twbsPagination: twbsPagination
     }
 })();

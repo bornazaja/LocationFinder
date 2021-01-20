@@ -5,7 +5,7 @@ namespace LocationFinderLibrary.BLL.API.Places.Helpers
 {
     public static class PlacesApiHelper
     {
-        public static List<RadiusDto> GetRadiuses()
+        public static IEnumerable<RadiusDto> GetRadiuses()
         {
             return new List<RadiusDto>
             {

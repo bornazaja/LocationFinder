@@ -1,5 +1,6 @@
 ﻿using LocationFinderLibrary.BLL.API.Places.Common.DTO;
 using LocationFinderLibrary.BLL.API.Places.GooglePlaces.DTO;
+using LocationFinderLibrary.BLL.Pagination;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -116,7 +117,7 @@ namespace LocationFinderLibrary.BLL.API.Places.GooglePlaces
             });
         }
 
-        public async Task<IEnumerable<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto)
+        public async Task<PagedList<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto, PageCriteria pageCriteria)
         {
             string categoryFilter = placeFilterDto.CategoryID == "0" ? string.Empty : $"&type={placeFilterDto.CategoryID}";
 
@@ -127,12 +128,14 @@ namespace LocationFinderLibrary.BLL.API.Places.GooglePlaces
                 var response = await httpClient.GetStringAsync(url);
                 var placesResponse = JsonConvert.DeserializeObject<PlacesResponseDto>(response);
 
-                return placesResponse.Results.Select(x => new NearbyPlaceDto
+                IEnumerable<NearbyPlaceDto> nearbyPlaces = placesResponse.Results.Select(x => new NearbyPlaceDto
                 {
                     Address = x.Vicinity,
                     Place = x.Name,
                     Category = x.Types.Count == 0 ? string.Empty : x.Types.First()
                 });
+
+                return new PagedList<NearbyPlaceDto>(nearbyPlaces, pageCriteria.PageIndex, pageCriteria.PageSize);
             }
         }
     }

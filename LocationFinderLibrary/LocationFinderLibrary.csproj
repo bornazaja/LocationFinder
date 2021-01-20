@@ -72,6 +72,9 @@
     <Compile Include="BLL\API\Places\Common\Helpers\PlacesApiHelper.cs" />
     <Compile Include="BLL\API\Places\Common\IPlacesApi.cs" />
     <Compile Include="BLL\Extensions\ListExtensions.cs" />
+    <Compile Include="BLL\Pagination\PageCriteria.cs" />
+    <Compile Include="BLL\Pagination\PagedList.cs" />
+    <Compile Include="BLL\Pagination\PaginationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

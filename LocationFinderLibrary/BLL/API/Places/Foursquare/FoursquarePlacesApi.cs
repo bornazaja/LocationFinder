@@ -2,6 +2,7 @@
 using LocationFinderLibrary.BLL.API.Places.Foursquare.DTO.Categories;
 using LocationFinderLibrary.BLL.API.Places.Foursquare.DTO.Venues;
 using LocationFinderLibrary.BLL.Extensions;
+using LocationFinderLibrary.BLL.Pagination;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace LocationFinderLibrary.BLL.API.Places.Foursquare
             }
         }
 
-        public async Task<IEnumerable<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto)
+        public async Task<PagedList<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto, PageCriteria pageCriteria)
         {
             string categoryFilter = placeFilterDto.CategoryID == "0" ? string.Empty : $"&categoryId={placeFilterDto.CategoryID}";
 
@@ -50,12 +51,14 @@ namespace LocationFinderLibrary.BLL.API.Places.Foursquare
                 var response = await httpClient.GetStringAsync(url);
                 var venuesResponse = JsonConvert.DeserializeObject<VenuesResponseDto>(response);
 
-                return venuesResponse.Response.Venues.Select(x => new NearbyPlaceDto
+                IEnumerable<NearbyPlaceDto> nearbyPlaces = venuesResponse.Response.Venues.Select(x => new NearbyPlaceDto
                 {
                     Address = x.Location.FormattedAddress.Count == 0 ? string.Empty : string.Join(", ", x.Location.FormattedAddress),
                     Place = x.Name,
                     Category = x.Categories.Count == 0 ? string.Empty : x.Categories.Where(c => c.Primary).FirstOrDefault().Name
                 });
+
+                return new PagedList<NearbyPlaceDto>(nearbyPlaces, pageCriteria.PageIndex, pageCriteria.PageSize);
             }
         }
     }
