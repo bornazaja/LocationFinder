@@ -25,7 +25,7 @@ function fetchItemsPerPageList() {
     app.getJson('/Home/GetItemsPerPageList', (data) => {
         app.bindSelect2("#ddlItemsPerPage", data);
         findCurrentLocation();
-    });
+    }, 'Error occur while retriving items per page list.');
 }
 
 function findCurrentLocation() {
@@ -42,17 +42,17 @@ function fetchNearbyPlaces(position) {
         PageSize: $('#ddlItemsPerPage').val()
     };
 
-
-    app.getJson('/Home/GetNearbyPlacesAsync', parameters, (data) => {
-        app.bindDataTable('#tblNearbyPlaces', ['Address', 'Place', 'Category'], data.Subset);
+    prepareNearbyPlaces(parameters, (data) => {
         app.twbsPagination.setup('#nearbyPlacesPagination', data.TotalPages, data.PageIndex, (paginationId, pageIndex) => {
             parameters.PageIndex = pageIndex;
-            app.dialog.loading([
-                app.getJson('/Home/GetNearbyPlacesAsync', parameters, (data) => {
-                    app.bindDataTable('#tblNearbyPlaces', ['Address', 'Place', 'Category'], data.Subset);
-                    app.twbsPagination.refresh(paginationId, data.TotalPages);
-                }, 'Error occur while retriving nearby places.')
-            ]);
+            app.dialog.loading([prepareNearbyPlaces(parameters, (data) => app.twbsPagination.refresh(paginationId, data.TotalPages))]);
         });
-    }, 'Error occur while retriving nearby places.');
+    });
+}
+
+function prepareNearbyPlaces(parameters, callback) {
+    app.getJson('/Home/GetNearbyPlacesAsync', parameters, (data) => {
+        app.bindDataTable('#tblNearbyPlaces', ['Address', 'Place', 'Category'], data.Subset);
+        callback(data);
+    }, 'Error occur while retriving nearby places.')
 }
