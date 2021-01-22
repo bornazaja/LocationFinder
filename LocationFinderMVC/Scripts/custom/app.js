@@ -1,17 +1,10 @@
 ﻿var app = (function () {
 
-    function getJson(url, callback, errorMessage, objectParameter = null) {
-        if (objectParameter != null) {
-            $.getJSON(url, objectParameter, data => callback(data)).fail((jqXHR, textStatus, errorThrown) => {
-                app.consoleLog('Request fail', textStatus, errorThrown);
-                app.dialog.alert(errorMessage);
-            });
-        } else {
-            $.getJSON(url).done(data => callback(data)).fail((jqXHR, textStatus, errorThrown) => {
-                app.consoleLog('Request fail', textStatus, errorThrown);
-                app.dialog.alert(errorMessage);
-            });
-        }
+    function getJson(url, callback, errorMessage) {
+        $.getJSON(url).done(data => callback(data)).fail((jqXHR, textStatus, errorThrown) => {
+            app.consoleLog('Request fail', textStatus, errorThrown);
+            app.dialog.alert(errorMessage);
+        });
     }
 
     function ajax(url, data, callback, errorMessage) {
