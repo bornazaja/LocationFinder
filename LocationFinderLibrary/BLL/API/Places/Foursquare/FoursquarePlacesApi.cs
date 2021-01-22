@@ -15,7 +15,7 @@ namespace LocationFinderLibrary.BLL.API.Places.Foursquare
     public class FoursquarePlacesApi : IPlacesApi
     {
         private const string ClientId = "CLIENT_ID";
-        private const string ClientSecret = "SECRET_CLIENT";
+        private const string ClientSecret = "CLIENT_SECRET";
         private const string DateFormat = "yyyyMMdd";
 
         public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
@@ -40,11 +40,11 @@ namespace LocationFinderLibrary.BLL.API.Places.Foursquare
             }
         }
 
-        public async Task<PagedList<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto, PageCriteria pageCriteria)
+        public async Task<PagedList<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceCriteriaDto placeCriteriaDto)
         {
-            string categoryFilter = placeFilterDto.CategoryID == "0" ? string.Empty : $"&categoryId={placeFilterDto.CategoryID}";
+            string categoryFilter = placeCriteriaDto.CategoryID == "0" ? string.Empty : $"&categoryId={placeCriteriaDto.CategoryID}";
 
-            string url = $"https://api.foursquare.com/v2/venues/search?client_id={ClientId}&client_secret={ClientSecret}&ll={placeFilterDto.Latitude},{placeFilterDto.Longitude}&radius={placeFilterDto.RadiusInMeters}{categoryFilter}&v={DateTime.Now.ToString(DateFormat)}";
+            string url = $"https://api.foursquare.com/v2/venues/search?client_id={ClientId}&client_secret={ClientSecret}&ll={placeCriteriaDto.Latitude},{placeCriteriaDto.Longitude}&radius={placeCriteriaDto.RadiusInMeters}{categoryFilter}&v={DateTime.Now.ToString(DateFormat)}";
 
             using (var httpClient = new HttpClient())
             {
@@ -56,9 +56,9 @@ namespace LocationFinderLibrary.BLL.API.Places.Foursquare
                     Address = x.Location.FormattedAddress.Count == 0 ? string.Empty : string.Join(", ", x.Location.FormattedAddress),
                     Place = x.Name,
                     Category = x.Categories.Count == 0 ? string.Empty : x.Categories.Where(c => c.Primary).FirstOrDefault().Name
-                });
+                }).SearchAndSortNearbyPlaces(placeCriteriaDto.Term);
 
-                return new PagedList<NearbyPlaceDto>(nearbyPlaces, pageCriteria.PageIndex, pageCriteria.PageSize);
+                return new PagedList<NearbyPlaceDto>(nearbyPlaces, placeCriteriaDto.PageCriteriaDto.PageIndex, placeCriteriaDto.PageCriteriaDto.PageSize);
             }
         }
     }

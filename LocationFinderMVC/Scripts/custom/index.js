@@ -33,26 +33,29 @@ function findCurrentLocation() {
 }
 
 function fetchNearbyPlaces(position) {
-    var parameters = {
+    var placeCriteriaDto = {
         Latitude: position.coords.latitude,
         Longitude: position.coords.longitude,
+        Term: $('#txtTerm').val(),
         RadiusInMeters: $('#ddlRadiuses').val(),
         CategoryID: $('#ddlCategories').val(),
-        PageIndex: 0,
-        PageSize: $('#ddlItemsPerPage').val()
+        PageCriteriaDto: {
+            PageIndex: 0,
+            PageSize: $('#ddlItemsPerPage').val()
+        }
     };
 
-    prepareNearbyPlaces(parameters, (data) => {
+    prepareNearbyPlaces(placeCriteriaDto, (data) => {
         app.twbsPagination.setup('#nearbyPlacesPagination', data.TotalPages, data.PageIndex, (paginationId, pageIndex) => {
-            parameters.PageIndex = pageIndex;
-            app.dialog.loading([prepareNearbyPlaces(parameters, (data) => app.twbsPagination.refresh(paginationId, data.TotalPages))]);
+            placeCriteriaDto.PageCriteriaDto.PageIndex = pageIndex;
+            app.dialog.loading([prepareNearbyPlaces(placeCriteriaDto, (data) => app.twbsPagination.refresh(paginationId, data.TotalPages))]);
         });
     });
 }
 
-function prepareNearbyPlaces(parameters, callback) {
-    app.getJson('/Home/GetNearbyPlacesAsync', parameters, (data) => {
+function prepareNearbyPlaces(data, callback) {
+    app.ajax('/Home/GetNearbyPlacesAsync', JSON.stringify({ placeCriteriaDto: data }), (data) => {
         app.bindDataTable('#tblNearbyPlaces', ['Address', 'Place', 'Category'], data.Subset);
         callback(data);
-    }, 'Error occur while retriving nearby places.')
+    }, 'Error occur while retriving nearby places.');
 }

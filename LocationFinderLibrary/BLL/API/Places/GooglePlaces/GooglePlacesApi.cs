@@ -1,5 +1,6 @@
 ﻿using LocationFinderLibrary.BLL.API.Places.Common.DTO;
 using LocationFinderLibrary.BLL.API.Places.GooglePlaces.DTO;
+using LocationFinderLibrary.BLL.Extensions;
 using LocationFinderLibrary.BLL.Pagination;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -117,11 +118,11 @@ namespace LocationFinderLibrary.BLL.API.Places.GooglePlaces
             });
         }
 
-        public async Task<PagedList<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto, PageCriteria pageCriteria)
+        public async Task<PagedList<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceCriteriaDto placeCriteriaDto)
         {
-            string categoryFilter = placeFilterDto.CategoryID == "0" ? string.Empty : $"&type={placeFilterDto.CategoryID}";
+            string categoryFilter = placeCriteriaDto.CategoryID == "0" ? string.Empty : $"&type={placeCriteriaDto.CategoryID}";
 
-            string url = $"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={placeFilterDto.Latitude},{placeFilterDto.Longitude}&radius={placeFilterDto.RadiusInMeters}{categoryFilter}&key={ApiKey}";
+            string url = $"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={placeCriteriaDto.Latitude},{placeCriteriaDto.Longitude}&radius={placeCriteriaDto.RadiusInMeters}{categoryFilter}&key={ApiKey}";
 
             using (var httpClient = new HttpClient())
             {
@@ -133,9 +134,9 @@ namespace LocationFinderLibrary.BLL.API.Places.GooglePlaces
                     Address = x.Vicinity,
                     Place = x.Name,
                     Category = x.Types.Count == 0 ? string.Empty : x.Types.First()
-                });
+                }).SearchAndSortNearbyPlaces(placeCriteriaDto.Term);
 
-                return new PagedList<NearbyPlaceDto>(nearbyPlaces, pageCriteria.PageIndex, pageCriteria.PageSize);
+                return new PagedList<NearbyPlaceDto>(nearbyPlaces, placeCriteriaDto.PageCriteriaDto.PageIndex, placeCriteriaDto.PageCriteriaDto.PageSize);
             }
         }
     }

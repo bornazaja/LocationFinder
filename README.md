@@ -1,5 +1,5 @@
 # Location Finder
-This is an application that finds nearby loaction by varius parameters such as category and radius. Application is using two APIs Foursquare and GooglePlaces for finding nearby places.
+This is an application that finds nearby places by varius parameters such as category and radius. Application is using two APIs GooglePlaces and Foursquare for finding nearby places.
 
 ### Tehnologies
 * C#

@@ -8,6 +8,6 @@ namespace LocationFinderLibrary.BLL.API.Places
     public interface IPlacesApi
     {
         Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
-        Task<PagedList<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto, PageCriteria pageCriteria);
+        Task<PagedList<NearbyPlaceDto>> GetNearbyPlacesAsync(PlaceCriteriaDto placeCriteriaDto);
     }
 }

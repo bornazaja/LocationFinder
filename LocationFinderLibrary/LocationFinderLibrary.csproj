@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="BLL\API\Places\Common\DTO\CategoryDto.cs" />
     <Compile Include="BLL\API\Places\Common\DTO\NearbyPlaceDto.cs" />
-    <Compile Include="BLL\API\Places\Common\DTO\PlaceFilterDto.cs" />
+    <Compile Include="BLL\API\Places\Common\DTO\PlaceCriteriaDto.cs" />
     <Compile Include="BLL\API\Places\Common\DTO\RadiusDto.cs" />
     <Compile Include="BLL\API\Places\Foursquare\DTO\Categories\CategoriesResponseDto.cs" />
     <Compile Include="BLL\API\Places\Foursquare\DTO\Categories\ResponseDto.cs" />
@@ -72,9 +72,10 @@
     <Compile Include="BLL\API\Places\Common\Helpers\PlacesApiHelper.cs" />
     <Compile Include="BLL\API\Places\Common\IPlacesApi.cs" />
     <Compile Include="BLL\Extensions\ListExtensions.cs" />
-    <Compile Include="BLL\Pagination\PageCriteria.cs" />
+    <Compile Include="BLL\Pagination\PageCriteriaDto.cs" />
     <Compile Include="BLL\Pagination\PagedList.cs" />
     <Compile Include="BLL\Pagination\PaginationHelper.cs" />
+    <Compile Include="BLL\Predicates\PredicateBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

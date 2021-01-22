@@ -22,9 +22,9 @@ namespace LocationFinderMVC.Controllers
             return View();
         }
 
-        public async Task<ActionResult> GetNearbyPlacesAsync(PlaceFilterDto placeFilterDto, PageCriteria pageCriteria)
+        public async Task<ActionResult> GetNearbyPlacesAsync(PlaceCriteriaDto placeCriteriaDto)
         {
-            var nearbyPlaces = await _placesApi.GetNearbyPlacesAsync(placeFilterDto, pageCriteria);
+            var nearbyPlaces = await _placesApi.GetNearbyPlacesAsync(placeCriteriaDto);
             return Json(nearbyPlaces, JsonRequestBehavior.AllowGet);
         }
 

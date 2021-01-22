@@ -1,11 +1,34 @@
 ﻿var app = (function () {
 
-    function getJson(url, objectParameter = null, callback, errorMessage) {
+    function getJson(url, callback, errorMessage, objectParameter = null) {
         if (objectParameter != null) {
-            $.getJSON(url, objectParameter, data => callback(data)).fail(() => app.dialog.alert(errorMessage));
+            $.getJSON(url, objectParameter, data => callback(data)).fail((jqXHR, textStatus, errorThrown) => {
+                app.consoleLog('Request fail', textStatus, errorThrown);
+                app.dialog.alert(errorMessage);
+            });
         } else {
-            $.getJSON(url).done(data => callback(data)).fail(() => app.dialog.alert(errorMessage));
+            $.getJSON(url).done(data => callback(data)).fail((jqXHR, textStatus, errorThrown) => {
+                app.consoleLog('Request fail', textStatus, errorThrown);
+                app.dialog.alert(errorMessage);
+            });
         }
+    }
+
+    function ajax(url, data, callback, errorMessage) {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'text',
+            type: 'POST',
+            url: url,
+            data: data
+        }).done((data) => callback(JSON.parse(data))).fail((jqXHR, textStatus, errorThrown) => {
+            app.consoleLog('Request fail', textStatus, errorThrown);
+            app.dialog.alert(errorMessage);
+        });
+    }
+
+    function consoleLog(title, ...args) {
+        console.log(title + ': ', args.join(', '));
     }
 
     function bindDataTable(tableId, properties, data) {
@@ -20,7 +43,9 @@
             'sScrollXInner': '100%',
             'bInfo': false,
             destroy: true,
-            paging: false
+            paging: false,
+            searching: false,
+            ordering: false
         });
     }
 
@@ -80,9 +105,11 @@
             $(paginationId + '> #pagination').twbsPagination({ totalPages: totalPages });
         }
     };
-    
+
     return {
         getJson: getJson,
+        ajax: ajax,
+        consoleLog: consoleLog,
         bindDataTable: bindDataTable,
         bindSelect2: bindSelect2,
         dialog: dialog,
