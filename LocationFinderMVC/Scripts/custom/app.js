@@ -51,6 +51,10 @@
             data: data
         });
 
+        app.setSelectFirstValue(ddlId);
+    }
+
+    function setSelectFirstValue(ddlId) {
         $(ddlId).val($(ddlId + ' option:eq(0)').val()).trigger('change');
     }
 
@@ -82,20 +86,20 @@
     };
 
     var twbsPagination = {
-        setup: function (paginationId, totalPages, pageIndex, callback) {
+        setup: function (paginationId, totalPages, callback) {
             $(paginationId).html('');
             $(paginationId).html('<ul id="pagination" class="pagination">');
             $(paginationId + ' > #pagination').twbsPagination({
                 initiateStartPageClick: false,
-                totalPages: totalPages,
-                startPage: pageIndex + 1,
+                totalPages: totalPages > 0 ? totalPages : 1,
+                startPage: 1,
                 onPageClick: function (event, page) {
                     callback(paginationId, page - 1);
                 }
             });
         },
         refresh: function (paginationId, totalPages) {
-            $(paginationId + '> #pagination').twbsPagination({ totalPages: totalPages });
+            $(paginationId + ' > #pagination').twbsPagination({ totalPages: totalPages });
         }
     };
 
@@ -105,6 +109,7 @@
         consoleLog: consoleLog,
         bindDataTable: bindDataTable,
         bindSelect2: bindSelect2,
+        setSelectFirstValue: setSelectFirstValue,
         dialog: dialog,
         twbsPagination: twbsPagination
     }

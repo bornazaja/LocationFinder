@@ -24,8 +24,8 @@ namespace LocationFinderMVC.Controllers
 
         public async Task<ActionResult> GetNearbyPlacesAsync(PlaceCriteriaDto placeCriteriaDto)
         {
-            var nearbyPlaces = await _placesApi.GetNearbyPlacesAsync(placeCriteriaDto);
-            return Json(nearbyPlaces, JsonRequestBehavior.AllowGet);
+            var nearbyPlacePagedList = await _placesApi.GetNearbyPlacesAsync(placeCriteriaDto);
+            return Json(nearbyPlacePagedList, JsonRequestBehavior.AllowGet);
         }
 
         public async Task<ActionResult> GetCategoriesAsync()

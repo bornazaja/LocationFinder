@@ -3,8 +3,15 @@
 });
 
 $('#btnApply').click(function () {
-    $('#filterModal').modal('hide');
+    $('#filtersModal').modal('hide');
     app.dialog.loading([findCurrentLocation()]);
+});
+
+$('#btnReset').click(function () {
+    $('#txtTerm').val('');
+    app.setSelectFirstValue('#ddlRadiuses');
+    app.setSelectFirstValue('#ddlCategories');
+    app.setSelectFirstValue('#ddlItemsPerPage');
 });
 
 function fetchCategories() {
@@ -46,7 +53,7 @@ function fetchNearbyPlaces(position) {
     };
 
     prepareNearbyPlaces(placeCriteriaDto, (data) => {
-        app.twbsPagination.setup('#nearbyPlacesPagination', data.TotalPages, data.PageIndex, (paginationId, pageIndex) => {
+        app.twbsPagination.setup('#nearbyPlacesPagination', data.TotalPages, (paginationId, pageIndex) => {
             placeCriteriaDto.PageCriteriaDto.PageIndex = pageIndex;
             app.dialog.loading([prepareNearbyPlaces(placeCriteriaDto, (data) => app.twbsPagination.refresh(paginationId, data.TotalPages))]);
         });
